@@ -1,7 +1,7 @@
 import os
 
 def load_file(path_file):
-    lines = list(open(path_file, 'r', encoding='utf8').readlines())
+    lines = list(open(path_file, 'r', encoding='utf8', errors='ignore').readlines())
     lines = [l.strip() for l in lines]
     return lines
 
@@ -56,7 +56,8 @@ def write_file(path_file, data):
 
 
 if __name__ == '__main__':
-    path_labels = './labels/openstack.csv'
+    project = 'openstack'
+    path_labels = './labels/' + project + '.csv'
     data_labels = load_file(path_file=path_labels)
     ids, labels = commit_id(data=data_labels), get_label(data=data_labels)
     dict_label(commit_ids=ids, labels=labels)

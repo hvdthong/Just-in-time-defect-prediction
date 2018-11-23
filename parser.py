@@ -62,10 +62,11 @@ def get_ids(data):
 
 
 if __name__ == '__main__':
-    project = 'openstack'
+    # project = 'openstack'
+    project = 'qt'
     path_data = './output/' + project
     ids = get_ids([f for f in listdir(path_data) if isfile(join(path_data, f))])
     messages, codes = info_commit(ids=ids, path_file=path_data)
     print(len(ids), len(messages), len(codes))
 
-    write_file(path_file='./labels/openstack_ids.txt', data=ids)
+    write_file(path_file='./labels/' + project + '_ids.txt', data=ids)
