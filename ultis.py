@@ -56,10 +56,23 @@ def write_file(path_file, data):
 
 
 if __name__ == '__main__':
-    project = 'openstack'
+    # project = 'openstack'
+    project = 'qt'
     path_labels = './labels/' + project + '.csv'
     data_labels = load_file(path_file=path_labels)
     ids, labels = commit_id(data=data_labels), get_label(data=data_labels)
-    dict_label(commit_ids=ids, labels=labels)
+    # dict_label(commit_ids=ids, labels=labels)
     print(len(ids), len(labels))
     print_label(data=data_labels)
+
+    valid_ids = load_file(path_file='./labels/' + project + '_ids.txt')
+    print(len(valid_ids))
+    data = list()
+    for i, l in zip(ids, labels):
+        if i in valid_ids:
+            print(i, l)
+            data.append(i + '\t' + l)
+    write_file(path_file='./labels/' + project + '_ids_label.txt', data=data)
+
+
+
