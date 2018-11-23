@@ -3,6 +3,7 @@ from os import listdir
 from os.path import isfile, join
 import re
 from nltk import word_tokenize
+from ultis import write_file
 
 
 def load_commit_msg(path_file):
@@ -66,3 +67,5 @@ if __name__ == '__main__':
     ids = get_ids([f for f in listdir(path_data) if isfile(join(path_data, f))])
     messages, codes = info_commit(ids=ids, path_file=path_data)
     print(len(ids), len(messages), len(codes))
+
+    write_file(path_file='./labels/openstack_ids.txt', data=ids)
