@@ -17,7 +17,10 @@ def get_label(data):
         if split_i[2] == '':
             labels.append('False')
         else:
-            labels.append('True')
+            if int(split_i[2]) > 0:
+                labels.append('True')
+            else:
+                labels.append('False')
     return labels
 
 
@@ -56,8 +59,8 @@ def write_file(path_file, data):
 
 
 if __name__ == '__main__':
-    # project = 'openstack'
-    project = 'qt'
+    project = 'openstack'
+    # project = 'qt'
     path_labels = './labels/' + project + '.csv'
     data_labels = load_file(path_file=path_labels)
     ids, labels = commit_id(data=data_labels), get_label(data=data_labels)
