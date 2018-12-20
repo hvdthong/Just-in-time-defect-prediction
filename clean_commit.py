@@ -1,11 +1,10 @@
 from os import listdir
 from os.path import isfile, join
 from parser_commit import get_ids, info_commit
-import nltk
 from ultis import load_file
 from nltk.tokenize import word_tokenize
 import string
-from nltk.corpus import stopwords
+import pickle
 
 
 def clean_message(data):
@@ -29,8 +28,9 @@ def clean_code(data):
         new_diff = list()
         for file_ in diff:
             lines = [' '.join(word_tokenize(clean_code_line(line=line))) for line in file_['diff']]
-            new_diff.append(' '.join(lines).strip())
+            new_diff.append(' '.join(word_tokenize(' '.join(lines).strip())))
         new_diffs.append(new_diff)
+        print(len(new_diffs))
     return new_diffs
 
 
@@ -48,6 +48,19 @@ def collect_labels_ver2(path_label):
     return ids, labels
 
 
+def saving_variable(pname, variable):
+    f = open('./variables/' + pname + '.pkl', 'wb')
+    pickle.dump(variable, f)
+    f.close()
+
+
+def loading_variable(pname):
+    f = open('./variables/' + pname + '.pkl', 'rb')
+    obj = pickle.load(f)
+    f.close()
+    return obj
+
+
 if __name__ == '__main__':
     project = 'openstack'
     # project = 'qt'
@@ -59,4 +72,8 @@ if __name__ == '__main__':
 
     messages, codes = info_commit(ids=ids, path_file=path_data)
     print(len(ids), len(labels), len(messages), len(codes))
-    messages, codes = clean_message(data=messages[:100]), clean_code(data=codes[:100], project=project)
+    # messages, codes = clean_message(data=messages[:100]), clean_code(data=codes[:100])
+    messages, codes = clean_message(data=messages), clean_code(data=codes)
+
+    saving_variable(project + '_messages', messages)
+    saving_variable(project + '_codes', codes)
