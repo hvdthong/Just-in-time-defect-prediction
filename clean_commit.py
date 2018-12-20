@@ -18,8 +18,6 @@ def clean_code_line(line):
             line = line[2:].replace(p, ' ' + p + ' ')
         elif line.startswith('+') or line.startswith('-') or line.startswith('#'):
             line = line[1:].replace(p, ' ' + p + ' ')
-        elif line == '':
-            pass
         else:
             line = line.replace(p, ' ' + p + ' ')
     return line
@@ -30,15 +28,9 @@ def clean_code(data, project):
     for diff in data:
         new_diff = list()
         for file_ in diff:
-            file_diff = file_['diff']
-            lines = list()
-            for line in file_diff:
-                line = clean_code_line(line=line)
-                lines.append(' '.join(word_tokenize(line)))
+            lines = [' '.join(word_tokenize(clean_code_line(line=line))) for line in file_['diff']]
             new_diff.append(' '.join(lines).strip())
         new_diffs.append(new_diff)
-    print(len(new_diffs))
-    exit()
     return new_diffs
 
 
