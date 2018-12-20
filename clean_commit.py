@@ -23,7 +23,7 @@ def clean_code_line(line):
     return line
 
 
-def clean_code(data, project):
+def clean_code(data):
     new_diffs = list()
     for diff in data:
         new_diff = list()
@@ -59,4 +59,4 @@ if __name__ == '__main__':
 
     messages, codes = info_commit(ids=ids, path_file=path_data)
     print(len(ids), len(labels), len(messages), len(codes))
-    messages, codes = clean_message(data=messages[:500]), clean_code(data=codes[:500], project=project)
+    messages, codes = clean_message(data=messages[:100]), clean_code(data=codes[:100], project=project)
