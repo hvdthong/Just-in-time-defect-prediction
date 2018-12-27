@@ -76,7 +76,9 @@ if __name__ == '__main__':
     print(len(messages), len(codes))
     dict_msg, dict_code = dictionary_commit(data=messages, type_data='msg'), dictionary_commit(data=codes,
                                                                                                type_data='code')
+    print('hello')
     print(len(dict_msg), len(dict_code))
     exit()
     padding_message(data=messages, max_length=256)
     padding_commit_code(data=codes, max_line=10, max_length=512)
+
