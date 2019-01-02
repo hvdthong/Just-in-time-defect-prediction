@@ -1,4 +1,5 @@
 from clean_commit import loading_variable
+import numpy as np
 
 
 def padding_length(line, max_length):
@@ -70,15 +71,34 @@ def dictionary_commit(data, type_data):
     return new_dict
 
 
+def mapping_dict_msg(pad_msg, dict_msg):
+    ##############################################################################################
+    # if the word is not in our dictionary, we will use the token '<UNK>'
+    ##############################################################################################
+    return np.array(
+        [np.array([dict_msg[w] if w in dict_msg else dict_msg['<UNK>'] for w in line.split(' ')]) for line in pad_msg])
+
+
+def mapping_dict_code(pad_code, dict_code):
+    ##############################################################################################
+    # if the word is not in our dictionary, we will use the token '<UNK>'
+    ##############################################################################################
+    new_pad = [
+        np.array([np.array([dict_code[w] if w in dict_code else dict_code['<UNK>'] for w in l.split(' ')]) for l in ml])
+        for ml in pad_code]
+    return np.array(new_pad)
+
+
 if __name__ == '__main__':
     project = 'openstack'
     messages, codes = loading_variable(project + '_messages'), loading_variable(project + '_codes')
-    print(len(messages), len(codes))
+    print('Number of instances in commit message %i and commit code %i ' % (len(messages), len(codes)))
     dict_msg, dict_code = dictionary_commit(data=messages, type_data='msg'), dictionary_commit(data=codes,
                                                                                                type_data='code')
-    print('hello')
-    print(len(dict_msg), len(dict_code))
-    exit()
-    padding_message(data=messages, max_length=256)
-    padding_commit_code(data=codes, max_line=10, max_length=512)
-
+    print('Dictionary message: %i -- Dictionary code: %i' % (len(dict_msg), len(dict_code)))
+    pad_msg, pad_code = padding_message(data=messages, max_length=256), padding_commit_code(data=codes, max_line=10,
+                                                                                            max_length=512)
+    pad_msg = mapping_dict_msg(pad_msg=pad_msg, dict_msg=dict_msg)
+    pad_code = mapping_dict_code(pad_code=pad_code, dict_code=dict_code)
+    print('Shape of commit messages: ', pad_msg.shape)
+    print('Shape of commit code: ', pad_code.shape)
