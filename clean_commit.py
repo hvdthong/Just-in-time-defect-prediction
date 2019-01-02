@@ -77,3 +77,5 @@ if __name__ == '__main__':
 
     saving_variable(project + '_messages', messages)
     saving_variable(project + '_codes', codes)
+    saving_variable(project + '_labels', labels)
+    saving_variable(project + '_ids', ids)
