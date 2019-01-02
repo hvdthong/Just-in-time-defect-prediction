@@ -1,4 +1,4 @@
-from clean_commit import loading_variable
+from clean_commit import loading_variable, saving_variable
 from padding import dictionary_commit, padding_message, padding_commit_code
 from padding import mapping_dict_msg, mapping_dict_code
 import numpy as np
@@ -28,9 +28,7 @@ def folding_data(pad_msg, pad_code, labels, ids, n_folds):
         ids_train, ids_test = get_index(data=ids, index=train_index), get_index(data=ids, index=test_index)
         train = (ids_train, labels_train, pad_msg_train, pad_code_train)
         test = (ids_test, labels_test, pad_msg_train, pad_code_train)
-        print(pad_msg_train.shape, pad_msg_test.shape)
-        info_label(labels_train), info_label(labels_test)
-        exit()
+        return train, test
 
 
 if __name__ == '__main__':
@@ -50,4 +48,6 @@ if __name__ == '__main__':
     print('Shape of commit messages: ', pad_msg.shape)
     print('Shape of commit code: ', pad_code.shape)
     data = (pad_msg, pad_code, labels, ids)
-    folding_data(pad_msg=pad_msg, pad_code=pad_code, labels=labels, ids=ids, n_folds=5)
+    train, test = folding_data(pad_msg=pad_msg, pad_code=pad_code, labels=labels, ids=ids, n_folds=5)
+    saving_variable(project + '_train', train)
+    saving_variable(project + '_test', test)
