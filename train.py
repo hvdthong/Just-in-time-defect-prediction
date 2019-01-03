@@ -4,6 +4,7 @@ from parameters import read_args
 from padding import dictionary_commit, padding_message, padding_commit_code, mapping_dict_msg, mapping_dict_code
 from ultis import mini_batches
 import os, datetime, torch
+from model_defect import DefectNet
 
 
 def loading_data(project):
@@ -47,13 +48,15 @@ def train_model(train, test, dictionary, params):
     params.filter_sizes = [int(k) for k in params.filter_sizes.split(',')]
     params.save_dir = os.path.join(params.save_dir, datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S'))
     params.vocab_msg, params.vocab_code = len(dict_msg), len(dict_code)
-
     if len(labels_train.shape) == 1:
         params.class_num = 1
     else:
         params.class_num = labels_train.shape[1]
-
     params.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
+    model = DefectNet(args=params)
+    if torch.cuda.is_available():
+        model = model.cuda()
     exit()
     new_train = (labels_train, pad_msg_train, pad_code_train)
     new_test = (labels_test, pad_msg_test, pad_code_test)
