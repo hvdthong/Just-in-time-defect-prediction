@@ -22,12 +22,14 @@ def get_index(data, index):
 def folding_data(pad_msg, pad_code, labels, ids, n_folds):
     sss = StratifiedShuffleSplit(n_splits=n_folds, random_state=0)  # random_state = 0 -- default setting
     for train_index, test_index in sss.split(pad_msg, labels):
-        pad_msg_train, pad_msg_test = pad_msg[train_index], pad_msg[test_index]
-        pad_code_train, pad_code_test = pad_code[train_index], pad_code[test_index]
+        pad_msg_train, pad_msg_test = get_index(data=pad_msg, index=train_index), get_index(data=pad_msg,
+                                                                                            index=test_index)
+        pad_code_train, pad_code_test = get_index(data=pad_code, index=train_index), get_index(data=pad_code,
+                                                                                               index=test_index)
         labels_train, labels_test = labels[train_index], labels[test_index]
         ids_train, ids_test = get_index(data=ids, index=train_index), get_index(data=ids, index=test_index)
         train = (ids_train, labels_train, pad_msg_train, pad_code_train)
-        test = (ids_test, labels_test, pad_msg_train, pad_code_train)
+        test = (ids_test, labels_test, pad_msg_test, pad_code_test)
         return train, test
 
 
@@ -38,16 +40,17 @@ if __name__ == '__main__':
     info_label(data=labels)
     print('Number of instances in commit message %i and commit code %i ' % (len(messages), len(codes)))
     print('Labels: %i' % (len(labels)))
-    dict_msg, dict_code = dictionary_commit(data=messages, type_data='msg'), dictionary_commit(data=codes,
-                                                                                               type_data='code')
-    print('Dictionary message: %i -- Dictionary code: %i' % (len(dict_msg), len(dict_code)))
-    pad_msg, pad_code = padding_message(data=messages, max_length=256), padding_commit_code(data=codes, max_line=10,
-                                                                                            max_length=512)
-    pad_msg = mapping_dict_msg(pad_msg=pad_msg, dict_msg=dict_msg)
-    pad_code = mapping_dict_code(pad_code=pad_code, dict_code=dict_code)
-    print('Shape of commit messages: ', pad_msg.shape)
-    print('Shape of commit code: ', pad_code.shape)
-    data = (pad_msg, pad_code, labels, ids)
-    train, test = folding_data(pad_msg=pad_msg, pad_code=pad_code, labels=labels, ids=ids, n_folds=5)
+    train, test = folding_data(pad_msg=messages, pad_code=codes, labels=labels, ids=ids, n_folds=5)
     saving_variable(project + '_train', train)
     saving_variable(project + '_test', test)
+
+    # dict_msg, dict_code = dictionary_commit(data=messages, type_data='msg'), dictionary_commit(data=codes,
+    #                                                                                            type_data='code')
+    # print('Dictionary message: %i -- Dictionary code: %i' % (len(dict_msg), len(dict_code)))
+    # pad_msg, pad_code = padding_message(data=messages, max_length=256), padding_commit_code(data=codes, max_line=10,
+    #                                                                                         max_length=512)
+    # pad_msg = mapping_dict_msg(pad_msg=pad_msg, dict_msg=dict_msg)
+    # pad_code = mapping_dict_code(pad_code=pad_code, dict_code=dict_code)
+    # print('Shape of commit messages: ', pad_msg.shape)
+    # print('Shape of commit code: ', pad_code.shape)
+    # data = (pad_msg, pad_code, labels, ids)
