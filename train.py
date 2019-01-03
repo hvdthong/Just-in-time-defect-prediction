@@ -38,13 +38,22 @@ def train_model(train, test, dictionary, params):
     pad_msg_test = padding_data(data=msg_test, dictionary=dict_msg, params=params, type='msg')
     pad_code_test = padding_data(data=code_test, dictionary=dict_code, params=params, type='code')
 
+    # building batches
     batches_train = mini_batches(X_msg=pad_msg_train, X_code=pad_code_train, Y=labels_train)
+
+    # set up parameters
     params.cuda = (not params.no_cuda) and torch.cuda.is_available()
     del params.no_cuda
     params.filter_sizes = [int(k) for k in params.filter_sizes.split(',')]
     params.save_dir = os.path.join(params.save_dir, datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S'))
+    params.vocab_msg, params.vocab_code = len(dict_msg), len(dict_code)
 
-    print(len(batches_train))
+    if len(labels_train.shape) == 1:
+        params.class_num = 1
+    else:
+        params.class_num = labels_train.shape[1]
+
+    params.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     exit()
     new_train = (labels_train, pad_msg_train, pad_code_train)
     new_test = (labels_test, pad_msg_test, pad_code_test)
