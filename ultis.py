@@ -1,4 +1,7 @@
 import os
+import math
+import numpy as np
+
 
 def load_file(path_file):
     lines = list(open(path_file, 'r', encoding='utf8', errors='ignore').readlines())
@@ -58,6 +61,41 @@ def write_file(path_file, data):
         out_file.close()
 
 
+def mini_batches(X_msg, X_code, Y, mini_batch_size=64, seed=0):
+    m = X_msg.shape[0]  # number of training examples
+    mini_batches = list()
+    np.random.seed(seed)
+
+    # Step 1: No shuffle (X, Y)
+    shuffled_X_msg, shuffled_X_code, shuffled_Y = X_msg, X_code, Y
+
+    # Step 2: Partition (X, Y). Minus the end case.
+    # number of mini batches of size mini_batch_size in your partitioning
+    num_complete_minibatches = int(math.floor(m / float(mini_batch_size)))
+
+    for k in range(0, num_complete_minibatches):
+        mini_batch_X_msg = shuffled_X_msg[k * mini_batch_size: k * mini_batch_size + mini_batch_size, :]
+        mini_batch_X_code = shuffled_X_code[k * mini_batch_size: k * mini_batch_size + mini_batch_size, :, :]
+        if len(Y.shape) == 1:
+            mini_batch_Y = shuffled_Y[k * mini_batch_size: k * mini_batch_size + mini_batch_size]
+        else:
+            mini_batch_Y = shuffled_Y[k * mini_batch_size: k * mini_batch_size + mini_batch_size, :]
+        mini_batch = (mini_batch_X_msg, mini_batch_X_code, mini_batch_Y)
+        mini_batches.append(mini_batch)
+
+    # Handling the end case (last mini-batch < mini_batch_size)
+    if m % mini_batch_size != 0:
+        mini_batch_X_msg = shuffled_X_msg[num_complete_minibatches * mini_batch_size: m, :]
+        mini_batch_X_code = shuffled_X_code[num_complete_minibatches * mini_batch_size: m, :, :]
+        if len(Y.shape) == 1:
+            mini_batch_Y = shuffled_Y[num_complete_minibatches * mini_batch_size: m]
+        else:
+            mini_batch_Y = shuffled_Y[num_complete_minibatches * mini_batch_size: m, :]
+        mini_batch = (mini_batch_X_msg, mini_batch_X_code, mini_batch_Y)
+        mini_batches.append(mini_batch)
+    return mini_batches
+
+
 if __name__ == '__main__':
     project = 'openstack'
     # project = 'qt'
@@ -76,6 +114,3 @@ if __name__ == '__main__':
             print(i, l)
             data.append(i + '\t' + l)
     write_file(path_file='./labels/' + project + '_ids_label.txt', data=data)
-
-
-

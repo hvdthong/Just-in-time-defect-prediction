@@ -30,7 +30,9 @@ def folding_data(pad_msg, pad_code, labels, ids, n_folds):
         ids_train, ids_test = get_index(data=ids, index=train_index), get_index(data=ids, index=test_index)
         train = (ids_train, labels_train, pad_msg_train, pad_code_train)
         test = (ids_test, labels_test, pad_msg_test, pad_code_test)
-        return train, test
+        dict_msg, dict_code = dictionary_commit(data=pad_msg_train, type_data='msg'), dictionary_commit(
+            data=pad_code_train, type_data='code')
+        return train, test, dict_msg, dict_code
 
 
 if __name__ == '__main__':
@@ -40,9 +42,11 @@ if __name__ == '__main__':
     info_label(data=labels)
     print('Number of instances in commit message %i and commit code %i ' % (len(messages), len(codes)))
     print('Labels: %i' % (len(labels)))
-    train, test = folding_data(pad_msg=messages, pad_code=codes, labels=labels, ids=ids, n_folds=5)
+    train, test, dict_msg, dict_code = folding_data(pad_msg=messages, pad_code=codes, labels=labels, ids=ids, n_folds=5)
     saving_variable(project + '_train', train)
     saving_variable(project + '_test', test)
+    saving_variable(project + '_dict_msg', dict_msg)
+    saving_variable(project + '_dict_code', dict_code)
 
     # dict_msg, dict_code = dictionary_commit(data=messages, type_data='msg'), dictionary_commit(data=codes,
     #                                                                                            type_data='code')
