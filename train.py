@@ -150,7 +150,8 @@ def train_model_mini_batches_update(train, test, dictionary, params):
         for batch in batches_train:
             pad_msg, pad_code, labels = batch
             if torch.cuda.is_available():
-                pad_msg, pad_code, labels = torch.tensor(pad_msg).cuda(), torch.tensor(pad_code).cuda(), torch.cuda.FloatTensor(labels)
+                pad_msg, pad_code, labels = torch.tensor(pad_msg).cuda(), torch.tensor(
+                    pad_code).cuda(), torch.cuda.FloatTensor(labels)
             else:
                 pad_msg, pad_code, labels = torch.tensor(pad_msg).long(), torch.tensor(pad_code).long(), torch.tensor(
                     labels).float()
