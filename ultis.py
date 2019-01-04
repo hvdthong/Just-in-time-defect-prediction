@@ -1,6 +1,7 @@
 import os
 import math
 import numpy as np
+import random
 
 
 def load_file(path_file):
@@ -91,6 +92,30 @@ def mini_batches(X_msg, X_code, Y, mini_batch_size=64, seed=0):
             mini_batch_Y = shuffled_Y[num_complete_minibatches * mini_batch_size: m]
         else:
             mini_batch_Y = shuffled_Y[num_complete_minibatches * mini_batch_size: m, :]
+        mini_batch = (mini_batch_X_msg, mini_batch_X_code, mini_batch_Y)
+        mini_batches.append(mini_batch)
+    return mini_batches
+
+
+def mini_batches_update(X_msg, X_code, Y, mini_batch_size=64, seed=0):
+    m = X_msg.shape[0]  # number of training examples
+    mini_batches = list()
+    np.random.seed(seed)
+
+    # Step 1: No shuffle (X, Y)
+    shuffled_X_msg, shuffled_X_code, shuffled_Y = X_msg, X_code, Y
+    Y = Y.tolist()
+    Y_pos = [i for i in range(len(Y)) if Y[i] == 1]
+    Y_neg = [i for i in range(len(Y)) if Y[i] == 0]
+
+    # Step 2: Partition (X, Y). Minus the end case.
+    # number of mini batches of size mini_batch_size in your partitioning
+    num_complete_minibatches = int(math.floor(m / float(mini_batch_size))) + 1
+    for k in range(0, num_complete_minibatches):
+        indexes = sorted(
+            random.sample(Y_pos, int(mini_batch_size / 2)) + random.sample(Y_neg, int(mini_batch_size / 2)))
+        mini_batch_X_msg, mini_batch_X_code = shuffled_X_msg[indexes], shuffled_X_code[indexes]
+        mini_batch_Y = shuffled_Y[indexes]
         mini_batch = (mini_batch_X_msg, mini_batch_X_code, mini_batch_Y)
         mini_batches.append(mini_batch)
     return mini_batches
