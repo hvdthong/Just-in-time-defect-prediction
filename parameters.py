@@ -23,7 +23,7 @@ def read_args():
     parser.add_argument('-l2_reg_lambda', type=float, default=1e-5, help='regularization rate')
     parser.add_argument('-learning_rate', type=float, default=1e-4, help='learning rate')
     parser.add_argument('-batch_size', type=int, default=64, help='batch size')
-    parser.add_argument('-num_epochs', type=int, default=50, help='the number of epochs')
+    parser.add_argument('-num_epochs', type=int, default=100, help='the number of epochs')
     parser.add_argument('-log-interval', type=int, default=1,
                         help='how many steps to wait before logging training status [default: 1]')
     parser.add_argument('-test-interval', type=int, default=10,

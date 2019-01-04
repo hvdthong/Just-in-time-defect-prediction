@@ -3,8 +3,11 @@ from split_train_test import info_label
 from parameters import read_args
 from padding import dictionary_commit, padding_message, padding_commit_code, mapping_dict_msg, mapping_dict_code
 from ultis import mini_batches
-import os, datetime, torch
+import os, datetime
 from model_defect import DefectNet
+import torch
+import torch.nn as nn
+from evaluation import eval
 
 
 def loading_data(project):
@@ -27,20 +30,65 @@ def padding_data(data, dictionary, params, type):
         exit()
 
 
+def save(model, save_dir, save_prefix, epochs):
+    if not os.path.isdir(save_dir):
+        os.makedirs(save_dir)
+    save_prefix = os.path.join(save_dir, save_prefix)
+    save_path = '{}_{}.pt'.format(save_prefix, epochs)
+    torch.save(model.state_dict(), save_path)
+
+
+def running_train(batches_train, batches_test, model, params):
+    optimizer = torch.optim.Adam(model.parameters(), lr=params.l2_reg_lambda)
+    steps = 0
+    for epoch in range(1, params.num_epochs + 1):
+        for batch in batches_train:
+            pad_msg, pad_code, labels = batch
+            if torch.cuda.is_available():
+                pad_msg, pad_code, labels = torch.tensor(pad_msg).cuda(), torch.tensor(
+                    pad_code).cuda(), torch.cuda.FloatTensor(labels)
+            else:
+                pad_msg, pad_code, labels = torch.tensor(pad_msg).long(), torch.tensor(pad_code).long(), torch.tensor(
+                    labels).float()
+
+            optimizer.zero_grad()
+            predict = model.forward(pad_msg, pad_code)
+            loss = nn.BCELoss()
+            loss = loss(predict, labels)
+            loss.backward()
+            optimizer.step()
+
+            steps += 1
+            if steps % params.log_interval == 0:
+                print('\rEpoch: {} step: {} - loss: {:.6f}'.format(epoch, steps, loss.item()))
+
+        print('Epoch: %i ---Training data' % (epoch))
+        acc, prc, rc = eval(data=batches_train, model=model)
+        print('Accuracy: %f -- Precision: %f -- Recall: %f' % (acc, prc, rc))
+
+        print('Epoch: %i ---Testing data' % (epoch))
+        acc, prc, rc = eval(data=batches_test, model=model)
+        print('Accuracy: %f -- Precision: %f -- Recall: %f' % (acc, prc, rc))
+        save(model, params.save_dir, 'epoch', epoch)
+
+
 def train_model(train, test, dictionary, params):
     ids_train, labels_train, msg_train, code_train = train
     ids_test, labels_test, msg_test, code_test = test
     dict_msg, dict_code = dictionary
     print('Dictionary message: %i -- Dictionary code: %i' % (len(dict_msg), len(dict_code)))
-
+    print('Training data')
+    info_label(labels_train)
     pad_msg_train = padding_data(data=msg_train, dictionary=dict_msg, params=params, type='msg')
     pad_code_train = padding_data(data=code_train, dictionary=dict_code, params=params, type='code')
-
+    print('Testing data')
+    info_label(labels_test)
     pad_msg_test = padding_data(data=msg_test, dictionary=dict_msg, params=params, type='msg')
     pad_code_test = padding_data(data=code_test, dictionary=dict_code, params=params, type='code')
 
     # building batches
     batches_train = mini_batches(X_msg=pad_msg_train, X_code=pad_code_train, Y=labels_train)
+    batches_test = mini_batches(X_msg=pad_msg_test, X_code=pad_code_test, Y=labels_test)
 
     # set up parameters
     params.cuda = (not params.no_cuda) and torch.cuda.is_available()
@@ -54,18 +102,11 @@ def train_model(train, test, dictionary, params):
         params.class_num = labels_train.shape[1]
     params.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
+    # create and train the defect model
     model = DefectNet(args=params)
     if torch.cuda.is_available():
         model = model.cuda()
-    exit()
-    new_train = (labels_train, pad_msg_train, pad_code_train)
-    new_test = (labels_test, pad_msg_test, pad_code_test)
-    print(labels_train.shape)
-    print(pad_msg_train.shape)
-    print(pad_code_train.shape)
-    print(labels_test.shape)
-    print(pad_msg_test.shape)
-    print(pad_code_test.shape)
+    running_train(batches_train=batches_train, batches_test=batches_test, model=model, params=params)
 
 
 if __name__ == '__main__':
