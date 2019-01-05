@@ -19,8 +19,9 @@ def eval(data, model):
                 pad_msg, pad_code = torch.tensor(pad_msg).cuda(), torch.tensor(pad_code).cuda()
             else:
                 pad_msg, pad_code = torch.tensor(pad_msg).long(), torch.tensor(pad_code).long()
+
             if torch.cuda.is_available():
-                predict = model.forward(pad_msg, pad_code).cpu().numpy().tolist()
+                predict = model.forward(pad_msg, pad_code).cpu().detach().numpy().tolist()
             else:
                 predict = model.forward(pad_msg, pad_code).detach().numpy().tolist()
             all_predict += predict
