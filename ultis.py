@@ -121,6 +121,10 @@ def mini_batches_update(X_msg, X_code, Y, mini_batch_size=64, seed=0):
     return mini_batches
 
 
+def mini_batches_undersampling(X_msg, X_code, Y, mini_batch_size=64, seed=0):
+    print('hello')
+
+
 if __name__ == '__main__':
     project = 'openstack'
     # project = 'qt'
