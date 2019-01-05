@@ -1,18 +1,23 @@
 import torch
 from parameters import read_args
-from ultis import mini_batches
+from ultis import mini_batches, write_file
 from model_defect import DefectNet
 from clean_commit import loading_variable
 from padding import padding_message, padding_commit_code, mapping_dict_msg, mapping_dict_code
-from sklearn.metrics import accuracy_score, precision_score, recall_score
+from sklearn.metrics import accuracy_score, precision_score, recall_score, roc_auc_score, roc_curve, auc
+import numpy as np
 
 
 def evaluation_metrics(y_true, y_pred):
+    fpr, tpr, thresholds = roc_curve(y_true=y_true, y_score=y_pred, pos_label=1)
+    auc_ = auc(fpr, tpr)
+
+    y_pred = [1 if p >= 0.5 else 0 for p in y_pred]
     acc = accuracy_score(y_true=y_true, y_pred=y_pred)
     prc = precision_score(y_true=y_true, y_pred=y_pred)
     rc = recall_score(y_true=y_true, y_pred=y_pred)
     f1 = 2 * prc * rc / (prc + rc)
-    return acc, prc, rc, f1
+    return acc, prc, rc, f1, auc_
 
 
 def loading_data(project):
@@ -67,8 +72,11 @@ def construct_model(data, params):
     return model, batches_test, batches_train
 
 
-def eval_dir(dir, data, model, params):
-    model.load_state_dict(torch.load(dir))
+def eval_dir(dir, data, model):
+    if torch.cuda.is_available():
+        model.load_state_dict(torch.load(dir))
+    else:
+        model.load_state_dict(torch.load(dir, map_location='cpu'))
     model.eval()  # since we use drop out
     all_predict, all_label = list(), list()
     for batch in data:
@@ -83,10 +91,9 @@ def eval_dir(dir, data, model, params):
             predict = model.forward(pad_msg, pad_code).detach().numpy().tolist()
         all_predict += predict
         all_label += labels.tolist()
-    all_predict = [1 if p >= 0.5 else 0 for p in all_predict]
-    acc, prc, rc, f1 = evaluation_metrics(y_pred=all_predict, y_true=all_label)
-    print('Accuracy: %f -- Precision: %f -- Recall: %f -- F1: %f' % (acc, prc, rc, f1))
-    return acc, prc, rc
+    acc, prc, rc, f1, auc_ = evaluation_metrics(y_pred=all_predict, y_true=all_label)
+    print('Accuracy: %f -- Precision: %f -- Recall: %f -- F1: %f -- AUC: %f' % (acc, prc, rc, f1, auc_))
+    return acc, prc, rc, f1, auc_
 
 
 if __name__ == '__main__':
@@ -98,7 +105,14 @@ if __name__ == '__main__':
     input_option.filter_sizes = [int(k) for k in input_option.filter_sizes.split(',')]
 
     model, data_test, data_train = construct_model(data=(training, testing, dictionary), params=input_option)
+    # input_option.start_epoch, input_option.end_epoch = 500, 1000
+    # input_option.datetime = '2019-01-04_13-28-35'
+    results = list()
     for epoch in range(input_option.start_epoch, input_option.end_epoch + 1):
         dir = './snapshot/' + input_option.datetime + '/epoch_' + str(epoch) + '.pt'
         print('--Epoch: %i' % epoch)
-        eval_dir(dir=dir, data=data_test, model=model, params=input_option)
+        acc, prc, rc, f1, auc_ = eval_dir(dir=dir, data=data_test, model=model)
+        results.append('Epoch: %i -- Accuracy: %f -- Precision: %f -- Recall: %f -- F1: %f -- AUC: %f'
+                       % (epoch, acc, prc, rc, f1, auc_))
+    path_save = './snapshot/' + input_option.datetime + '.txt'
+    write_file(path_file=path_save, data=results)
