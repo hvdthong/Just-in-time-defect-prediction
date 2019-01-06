@@ -108,8 +108,7 @@ def mini_batches_update(X_msg, X_code, Y, mini_batch_size=64, seed=0):
     Y_pos = [i for i in range(len(Y)) if Y[i] == 1]
     Y_neg = [i for i in range(len(Y)) if Y[i] == 0]
 
-    # Step 2: Partition (X, Y). Minus the end case.
-    # number of mini batches of size mini_batch_size in your partitioning
+    # Step 2: Randomly pick mini_batch_size / 2 from each of positive and negative labels
     num_complete_minibatches = int(math.floor(m / float(mini_batch_size))) + 1
     for k in range(0, num_complete_minibatches):
         indexes = sorted(
@@ -122,7 +121,19 @@ def mini_batches_update(X_msg, X_code, Y, mini_batch_size=64, seed=0):
 
 
 def mini_batches_undersampling(X_msg, X_code, Y, mini_batch_size=64, seed=0):
-    print('hello')
+    # Step 1: No shuffle (X, Y)
+    shuffled_X_msg, shuffled_X_code, shuffled_Y = X_msg, X_code, Y
+    Y = Y.tolist()
+    Y_pos = [i for i in range(len(Y)) if Y[i] == 1]
+    Y_neg = [i for i in range(len(Y)) if Y[i] == 0]
+
+    # Step 2: apply under sampling. Reduce the size of the majority class
+    indexes = sorted(Y_pos + random.sample(Y_neg, len(Y_pos)))
+    sample_shuffled_X_msg, sample_shuffled_X_code = shuffled_X_msg[indexes], shuffled_X_code[indexes]
+    sample_shuffled_Y = shuffled_Y[indexes]
+    batches = mini_batches(X_msg=sample_shuffled_X_msg, X_code=sample_shuffled_X_code, Y=sample_shuffled_Y,
+                           mini_batch_size=mini_batch_size)
+    return batches
 
 
 if __name__ == '__main__':
