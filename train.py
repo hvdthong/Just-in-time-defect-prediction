@@ -171,12 +171,12 @@ def train_model_mini_batches_update(train, test, dictionary, params):
                 print('\rEpoch: {} step: {} - loss: {:.6f}'.format(epoch, steps, loss.item()))
 
         print('Epoch: %i ---Training data' % (epoch))
-        acc, prc, rc = eval(data=batches_train, model=model)
-        print('Accuracy: %f -- Precision: %f -- Recall: %f' % (acc, prc, rc))
+        acc, prc, rc, f1, auc_ = eval(data=batches_train, model=model)
+        print('Accuracy: %f -- Precision: %f -- Recall: %f -- F1: %f -- AUC: %f' % (acc, prc, rc, f1, auc_))
         print('Epoch: %i ---Testing data' % (epoch))
-        acc, prc, rc = eval(data=batches_test, model=model)
-        print('Accuracy: %f -- Precision: %f -- Recall: %f' % (acc, prc, rc))
-        if epoch >= 500:
+        acc, prc, rc, f1, auc_ = eval(data=batches_test, model=model)
+        print('Accuracy: %f -- Precision: %f -- Recall: %f -- F1: %f -- AUC: %f' % (acc, prc, rc, f1, auc_))
+        if epoch % 5 == 0:
             save(model, params.save_dir, 'epoch', epoch)
 
 
@@ -317,6 +317,88 @@ def train_model_loss(project, train, test, dictionary, params):
                 loss = custom_loss(y_pred=predict, y_true=labels, weights=[0.1, 1])
                 loss.backward()
                 optimizer.step()
+            elif project == 'qt':
+                print('We need to find the weights for negative and positive labels later')
+                exit()
+            else:
+                loss = nn.BCELoss()
+                loss = loss(predict, labels)
+                loss.backward()
+                optimizer.step()
+
+            steps += 1
+            if steps % params.log_interval == 0:
+                print('\rEpoch: {} step: {} - loss: {:.6f}'.format(epoch, steps, loss.item()))
+
+        print('Epoch: %i ---Training data' % (epoch))
+        acc, prc, rc, f1, auc_ = eval(data=batches_train, model=model)
+        print('Accuracy: %f -- Precision: %f -- Recall: %f -- F1: %f -- AUC: %f' % (acc, prc, rc, f1, auc_))
+        print('Epoch: %i ---Testing data' % (epoch))
+        acc, prc, rc, f1, auc_ = eval(data=batches_test, model=model)
+        print('Accuracy: %f -- Precision: %f -- Recall: %f -- F1: %f -- AUC: %f' % (acc, prc, rc, f1, auc_))
+        if epoch % 5 == 0:
+            save(model, params.save_dir, 'epoch', epoch)
+
+
+def train_model_loss_undersampling(project, train, test, dictionary, params):
+    #####################################################################################################
+    # training model using penalized classification technique (modify loss function) and under sampling technique
+    #####################################################################################################
+    ids_train, labels_train, msg_train, code_train = train
+    ids_test, labels_test, msg_test, code_test = test
+    dict_msg, dict_code = dictionary
+    print('Dictionary message: %i -- Dictionary code: %i' % (len(dict_msg), len(dict_code)))
+
+    # print('Training data')
+    # info_label(labels_train)
+    pad_msg_train = padding_data(data=msg_train, dictionary=dict_msg, params=params, type='msg')
+    pad_code_train = padding_data(data=code_train, dictionary=dict_code, params=params, type='code')
+    # print('Testing data')
+    # info_label(labels_test)
+    pad_msg_test = padding_data(data=msg_test, dictionary=dict_msg, params=params, type='msg')
+    pad_code_test = padding_data(data=code_test, dictionary=dict_code, params=params, type='code')
+
+    # set up parameters
+    params.cuda = (not params.no_cuda) and torch.cuda.is_available()
+    del params.no_cuda
+    params.filter_sizes = [int(k) for k in params.filter_sizes.split(',')]
+    params.save_dir = os.path.join(params.save_dir, datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S'))
+    params.vocab_msg, params.vocab_code = len(dict_msg), len(dict_code)
+    if len(labels_train.shape) == 1:
+        params.class_num = 1
+    else:
+        params.class_num = labels_train.shape[1]
+    params.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
+    # create and train the defect model
+    model = DefectNet(args=params)
+    if torch.cuda.is_available():
+        model = model.cuda()
+    optimizer = torch.optim.Adam(model.parameters(), lr=params.l2_reg_lambda)
+    steps = 0
+
+    batches_test = mini_batches(X_msg=pad_msg_test, X_code=pad_code_test, Y=labels_test)
+    for epoch in range(1, params.num_epochs + 1):
+        # building batches for training model
+        batches_train = mini_batches_undersampling(X_msg=pad_msg_train, X_code=pad_code_train, Y=labels_train)
+        for batch in batches_train:
+            pad_msg, pad_code, labels = batch
+            if torch.cuda.is_available():
+                pad_msg, pad_code, labels = torch.tensor(pad_msg).cuda(), torch.tensor(
+                    pad_code).cuda(), torch.cuda.FloatTensor(labels)
+            else:
+                pad_msg, pad_code, labels = torch.tensor(pad_msg).long(), torch.tensor(pad_code).long(), torch.tensor(
+                    labels).float()
+
+            optimizer.zero_grad()
+            predict = model.forward(pad_msg, pad_code)
+            if project == 'openstack':
+                loss = custom_loss(y_pred=predict, y_true=labels, weights=[0.1, 1])
+                loss.backward()
+                optimizer.step()
+            elif project == 'qt':
+                print('We need to find the weights for negative and positive labels later')
+                exit()
             else:
                 loss = nn.BCELoss()
                 loss = loss(predict, labels)
@@ -345,4 +427,5 @@ if __name__ == '__main__':
     # train_model(train=train, test=test, dictionary=dictionary, params=input_option)
     # train_model_mini_batches_update(train=train, test=test, dictionary=dictionary, params=input_option)
     # train_model_mini_batches_undersampling(train=train, test=test, dictionary=dictionary, params=input_option)
-    train_model_loss(project=project, train=train, test=test, dictionary=dictionary, params=input_option)
+    # train_model_loss(project=project, train=train, test=test, dictionary=dictionary, params=input_option)
+    train_model_loss_undersampling(project=project, train=train, test=test, dictionary=dictionary, params=input_option)

@@ -105,10 +105,10 @@ if __name__ == '__main__':
     input_option.filter_sizes = [int(k) for k in input_option.filter_sizes.split(',')]
 
     model, data_test, data_train = construct_model(data=(training, testing, dictionary), params=input_option)
-    # input_option.start_epoch, input_option.end_epoch = 500, 1000
+    # input_option.start_epoch, input_option.end_epoch, input_option.step = 500, 1000, 5
     # input_option.datetime = '2019-01-04_13-28-35'
     results = list()
-    for epoch in range(input_option.start_epoch, input_option.end_epoch + 1):
+    for epoch in range(input_option.start_epoch, input_option.end_epoch, input_option.step):
         dir = './snapshot/' + input_option.datetime + '/epoch_' + str(epoch) + '.pt'
         print('--Epoch: %i' % epoch)
         acc, prc, rc, f1, auc_ = eval_dir(dir=dir, data=data_test, model=model)
