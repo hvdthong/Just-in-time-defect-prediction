@@ -2,8 +2,8 @@ import pandas as pd
 import pickle
 from sklearn.model_selection import StratifiedShuffleSplit
 from sklearn.svm import SVR
-from jit_approach.evaluation_dir import evaluation_metrics
-from jit_approach.split_train_test import convert_label
+from evaluation_dir import evaluation_metrics
+from split_train_test import convert_label
 from sklearn import preprocessing
 from sklearn.linear_model import LogisticRegression
 from sklearn import svm
@@ -68,8 +68,8 @@ if __name__ == '__main__':
     project = 'openstack'
     path_data = '../output/' + project
     path_label = '../labels/' + project + '_ids_label.txt'
-    ids, labels = loading_variable_path(pname='../variables/' + project + '_ids.pkl'), convert_label(
-        loading_variable_path(pname='../variables/' + project + '_labels.pkl'))
+    ids, labels = loading_variable_path(pname='../variables_ver1/' + project + '_ids.pkl'), convert_label(
+        loading_variable_path(pname='../variables_ver1/' + project + '_labels.pkl'))
     ids, features = load_features(ids=ids, path_data='../labels/' + project + '.csv')
     training, testing = split_folding_data(X=features, y=labels, n_folds=5)
     # baseline_algorithm(train=training, test=testing, algorihm='svr_rbf')
