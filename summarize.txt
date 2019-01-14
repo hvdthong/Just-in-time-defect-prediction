@@ -1,0 +1,9 @@
+# variables_ver1 folder is the folder that we randomly split training/testing data
+# variables_ver1: 
+###
+# 2019-01-04_13-28-35 embedding_dim=32 filter_sizes=1,2 num_filters=32 hidden_sizes=128 --mini_batches_update
+# 2019-01-04_14-21-28 embedding_dim=64 filter_sizes=1,2,3 num_filters=64 hidden_sizes=512 --mini_batches_update
+# 2019-01-06_11-01-07 embedding_dim=64 filter_sizes=1,2,3 num_filters=64 hidden_sizes=512 --under_sampling
+# 2019-01-06_11-01-36 embedding_dim=64 filter_sizes=1,2,3 num_filters=64 hidden_sizes=512 --loss_update
+# 2019-01-07_02-41-28 embedding_dim=64 filter_sizes=1,2,3 num_filters=64 hidden_sizes=512 --mini_batches_update
+# 2019-01-07_02-50-34 embedding_dim=64 filter_sizes=1,2,3 num_filters=64 hidden_sizes=512 --under_sampling + loss_update
