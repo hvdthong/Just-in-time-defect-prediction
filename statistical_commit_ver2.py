@@ -1,4 +1,4 @@
-from jit_approach.clean_commit import loading_variable
+from clean_commit import loading_variable
 import matplotlib.pyplot as plt
 from statistics import mean, stdev
 

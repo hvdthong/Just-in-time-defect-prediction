@@ -1,5 +1,5 @@
-from jit_approach.clean_commit import loading_variable, saving_variable
-from jit_approach.padding import dictionary_commit
+from clean_commit import loading_variable, saving_variable
+from padding import dictionary_commit
 import numpy as np
 from sklearn.model_selection import StratifiedShuffleSplit
 

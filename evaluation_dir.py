@@ -1,9 +1,9 @@
 import torch
-from jit_approach.parameters import read_args
-from jit_approach.ultis import mini_batches, write_file
-from jit_approach.model_defect import DefectNet
-from jit_approach.clean_commit import loading_variable
-from jit_approach.padding import padding_message, padding_commit_code, mapping_dict_msg, mapping_dict_code
+from parameters import read_args
+from ultis import mini_batches, write_file
+from model_defect import DefectNet
+from clean_commit import loading_variable
+from padding import padding_message, padding_commit_code, mapping_dict_msg, mapping_dict_code
 from sklearn.metrics import accuracy_score, precision_score, recall_score, roc_curve, auc
 
 
