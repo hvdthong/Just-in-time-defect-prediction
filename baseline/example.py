@@ -1,5 +1,5 @@
 from load_data import loading_variable_path
-from split_train_test import convert_label
+from jit_approach.split_train_test import convert_label
 
 
 if __name__ == '__main__':

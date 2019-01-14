@@ -1,7 +1,7 @@
 from os import listdir
 from os.path import isfile, join
-from parser_commit import get_ids, info_commit
-from ultis import load_file
+from jit_approach.parser_commit import get_ids, info_commit
+from jit_approach.ultis import load_file
 from nltk.tokenize import word_tokenize
 import string
 import pickle

@@ -1,9 +1,7 @@
-from ultis import load_file, commit_id
+from jit_approach.ultis import load_file
 from os import listdir
 from os.path import isfile, join
 import re
-from nltk import word_tokenize
-from ultis import write_file
 
 
 def load_commit_msg(path_file):
