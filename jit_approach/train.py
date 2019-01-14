@@ -1,13 +1,13 @@
-from clean_commit import loading_variable
-from split_train_test import info_label
-from parameters import read_args
-from padding import dictionary_commit, padding_message, padding_commit_code, mapping_dict_msg, mapping_dict_code
-from ultis import mini_batches, mini_batches_update, mini_batches_undersampling
+from jit_approach.clean_commit import loading_variable
+from jit_approach.split_train_test import info_label
+from jit_approach.parameters import read_args
+from jit_approach.padding import padding_message, padding_commit_code, mapping_dict_msg, mapping_dict_code
+from jit_approach.ultis import mini_batches, mini_batches_update, mini_batches_undersampling
 import os, datetime
-from model_defect import DefectNet
+from jit_approach.model_defect import DefectNet
 import torch
 import torch.nn as nn
-from evaluation import eval
+from jit_approach.evaluation import eval
 
 
 def loading_data(project):

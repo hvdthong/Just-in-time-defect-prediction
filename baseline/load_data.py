@@ -1,10 +1,9 @@
-from clean_commit import collect_labels_ver2
 import pandas as pd
 import pickle
 from sklearn.model_selection import StratifiedShuffleSplit
 from sklearn.svm import SVR
-from evaluation_dir import evaluation_metrics
-from split_train_test import convert_label
+from jit_approach.evaluation_dir import evaluation_metrics
+from jit_approach.split_train_test import convert_label
 from sklearn import preprocessing
 from sklearn.linear_model import LogisticRegression
 from sklearn import svm
