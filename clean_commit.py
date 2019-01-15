@@ -62,8 +62,8 @@ def loading_variable(pname):
 
 
 if __name__ == '__main__':
-    # project = 'openstack'
-    project = 'qt'
+    project = 'openstack'
+    # project = 'qt'
     path_data = './output/' + project
     path_label = './labels/' + project + '_ids_label.txt'
 

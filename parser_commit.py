@@ -45,9 +45,14 @@ def load_commit_code(path_file):
 
 def info_commit(ids, path_file):
     messsages, codes = list(), list()
+    cnt_noexits = 0
     for i in range(0, len(ids)):
-        codes.append(load_commit_code(path_file=path_file + '/' + ids[i] + '.diff'))
-        messsages.append(load_commit_msg(path_file=path_file + '/' + ids[i] + '.msg'))
+        try:
+            codes.append(load_commit_code(path_file=path_file + '/' + ids[i] + '.diff'))
+            messsages.append(load_commit_msg(path_file=path_file + '/' + ids[i] + '.msg'))
+        except FileNotFoundError:
+            print('File commit id no exits', ids[i], cnt_noexits)
+            cnt_noexits +=1
     return messsages, codes
 
 
