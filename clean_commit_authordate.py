@@ -13,7 +13,7 @@ def sorted_authordate(ids, path_data):
     new_df = pd.concat(new_df)
     new_df = new_df.sort_values(by=['author_date']).fillna(0)
     ids, labels = list(new_df['commit_id'].values), list(new_df['bugcount'].values)
-    labels = [0 if (l == 0) else 1 for l in labels]
+    labels = [1 if (int(l) > 0) else 0 for l in labels]
     return ids, labels
 
 

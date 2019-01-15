@@ -16,11 +16,17 @@ def get_label(data):
     return data
 
 
+def load_df_yasu_data(path_data):
+    data = pd.read_csv(path_data)
+
+
 def load_yasu_data(project, duration, period):
-    if project == 'openstack' and duration == '6-month' and period == 'long':
+    if project == 'openstack' and period == 'long':
+        train_path_data = './yasu_replication_data/' + project + '.STRATA_PER_YEAR.4.all.7.csv'
+        train_data = pd.read_csv(path_data)
         data = list()
         for i in range(0, 5):
-            path_data = './yasu_replication_data/' + project + '.STRATA_PER_YEAR.2.all.' + str(i) + '.csv'
+            path_data = './yasu_replication_data/' + project + '.STRATA_PER_YEAR.4.all.' + str(i) + '.csv'
             data.append(pd.read_csv(path_data))
         data_new = pd.concat(data)
         data_new = replace_value_dataframe(df=data_new)
@@ -39,5 +45,5 @@ if __name__ == '__main__':
     # local -> Short - period
     # all -> Long - periods
     ################################################################################
-    project, duration, period = 'openstack', '6-month', 'long'
+    project, duration, period = 'openstack', 'three-month', 'long'
     load_yasu_data(project=project, duration=duration, period=period)

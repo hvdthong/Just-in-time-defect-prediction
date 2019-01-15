@@ -76,7 +76,7 @@ def eval_dir(dir, data, model):
         model.load_state_dict(torch.load(dir))
     else:
         model.load_state_dict(torch.load(dir, map_location='cpu'))
-    model.eval()  # since we use drop out
+    model.eval()  # since we use drop out, need to apply eval so that dropout will be set 1.0
     all_predict, all_label = list(), list()
     for batch in data:
         pad_msg, pad_code, labels = batch

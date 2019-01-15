@@ -118,12 +118,12 @@ def train_model_mini_batches_update(train, test, dictionary, params):
     dict_msg, dict_code = dictionary
     print('Dictionary message: %i -- Dictionary code: %i' % (len(dict_msg), len(dict_code)))
 
-    # print('Training data')
-    # info_label(labels_train)
+    print('Training data')
+    info_label(labels_train)
     pad_msg_train = padding_data(data=msg_train, dictionary=dict_msg, params=params, type='msg')
     pad_code_train = padding_data(data=code_train, dictionary=dict_code, params=params, type='code')
-    # print('Testing data')
-    # info_label(labels_test)
+    print('Testing data')
+    info_label(labels_test)
     pad_msg_test = padding_data(data=msg_test, dictionary=dict_msg, params=params, type='msg')
     pad_code_test = padding_data(data=code_test, dictionary=dict_code, params=params, type='code')
 
@@ -189,12 +189,12 @@ def train_model_mini_batches_undersampling(train, test, dictionary, params):
     dict_msg, dict_code = dictionary
     print('Dictionary message: %i -- Dictionary code: %i' % (len(dict_msg), len(dict_code)))
 
-    # print('Training data')
-    # info_label(labels_train)
+    print('Training data')
+    info_label(labels_train)
     pad_msg_train = padding_data(data=msg_train, dictionary=dict_msg, params=params, type='msg')
     pad_code_train = padding_data(data=code_train, dictionary=dict_code, params=params, type='code')
-    # print('Testing data')
-    # info_label(labels_test)
+    print('Testing data')
+    info_label(labels_test)
     pad_msg_test = padding_data(data=msg_test, dictionary=dict_msg, params=params, type='msg')
     pad_code_test = padding_data(data=code_test, dictionary=dict_code, params=params, type='code')
 
@@ -349,12 +349,12 @@ def train_model_loss_undersampling(project, train, test, dictionary, params):
     dict_msg, dict_code = dictionary
     print('Dictionary message: %i -- Dictionary code: %i' % (len(dict_msg), len(dict_code)))
 
-    # print('Training data')
-    # info_label(labels_train)
+    print('Training data')
+    info_label(labels_train)
     pad_msg_train = padding_data(data=msg_train, dictionary=dict_msg, params=params, type='msg')
     pad_code_train = padding_data(data=code_train, dictionary=dict_code, params=params, type='code')
-    # print('Testing data')
-    # info_label(labels_test)
+    print('Testing data')
+    info_label(labels_test)
     pad_msg_test = padding_data(data=msg_test, dictionary=dict_msg, params=params, type='msg')
     pad_code_test = padding_data(data=code_test, dictionary=dict_code, params=params, type='code')
 
@@ -425,7 +425,7 @@ if __name__ == '__main__':
     input_option = read_args().parse_args()
     input_help = read_args().print_help()
     # train_model(train=train, test=test, dictionary=dictionary, params=input_option)
-    # train_model_mini_batches_update(train=train, test=test, dictionary=dictionary, params=input_option)
+    train_model_mini_batches_update(train=train, test=test, dictionary=dictionary, params=input_option)
     # train_model_mini_batches_undersampling(train=train, test=test, dictionary=dictionary, params=input_option)
     # train_model_loss(project=project, train=train, test=test, dictionary=dictionary, params=input_option)
-    train_model_loss_undersampling(project=project, train=train, test=test, dictionary=dictionary, params=input_option)
+    # train_model_loss_undersampling(project=project, train=train, test=test, dictionary=dictionary, params=input_option)
