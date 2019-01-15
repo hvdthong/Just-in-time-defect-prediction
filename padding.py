@@ -63,7 +63,7 @@ def dictionary_commit(data, type_data):
         print('You need to give an correct data type')
         exit()
     lists = list(sorted(list(set(lists))))
-    lists.append('<UNK>')
+    # lists.append('<UNK>')
     lists.append('<NULL>')
     new_dict = dict()
     for i in range(len(lists)):
@@ -75,16 +75,21 @@ def mapping_dict_msg(pad_msg, dict_msg):
     ##############################################################################################
     # if the word is not in our dictionary, we will use the token '<UNK>'
     ##############################################################################################
+    # return np.array(
+    #     [np.array([dict_msg[w] if w in dict_msg else dict_msg['<UNK>'] for w in line.split(' ')]) for line in pad_msg])
     return np.array(
-        [np.array([dict_msg[w] if w in dict_msg else dict_msg['<UNK>'] for w in line.split(' ')]) for line in pad_msg])
+        [np.array([dict_msg[w] if w in dict_msg else dict_msg['<NULL>'] for w in line.split(' ')]) for line in pad_msg])
 
 
 def mapping_dict_code(pad_code, dict_code):
     ##############################################################################################
     # if the word is not in our dictionary, we will use the token '<UNK>'
     ##############################################################################################
+    # new_pad = [
+    #     np.array([np.array([dict_code[w] if w in dict_code else dict_code['<UNK>'] for w in l.split(' ')]) for l in ml])
+    #     for ml in pad_code]
     new_pad = [
-        np.array([np.array([dict_code[w] if w in dict_code else dict_code['<UNK>'] for w in l.split(' ')]) for l in ml])
+        np.array([np.array([dict_code[w] if w in dict_code else dict_code['<NULL>'] for w in l.split(' ')]) for l in ml])
         for ml in pad_code]
     return np.array(new_pad)
 
