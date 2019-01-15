@@ -13,14 +13,14 @@ def get_ids(data):
 
 
 def get_label(data):
-    return data
+    return data[:, 3:4]
 
 
 def load_df_yasu_data(path_data):
     data = pd.read_csv(path_data)
     data = replace_value_dataframe(df=data)
-    ids, features = get_ids(data=data), get_features(data=data)
-    return (ids, features)
+    ids, labels, features = get_ids(data=data), get_label(data=data), get_features(data=data)
+    return (ids, labels, features)
 
 
 def load_yasu_data(project, duration, period):
