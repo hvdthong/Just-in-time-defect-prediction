@@ -420,7 +420,11 @@ def train_model_loss_undersampling(project, train, test, dictionary, params):
 
 
 if __name__ == '__main__':
-    project = 'openstack'
+    # project: parameters
+    ###########################################################################################
+    # project = 'openstack'
+    project = 'qt'
+    ###########################################################################################
     train, test, dictionary = loading_data(project=project)
     input_option = read_args().parse_args()
     input_help = read_args().print_help()

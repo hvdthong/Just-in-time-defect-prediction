@@ -94,7 +94,8 @@ if __name__ == '__main__':
     # setting project, long, and short period
     # project, duration, period = 'openstack', 'three-month', 'long'
     # project, duration, period = 'openstack', 'three-month', 'short'
-    project, duration, period = 'qt', 'three-month', 'long'
+    # project, duration, period = 'qt', 'three-month', 'long'
+    project, duration, period = 'qt', 'three-month', 'short'
 
     ################################################################################
     # load training/testing data

@@ -34,12 +34,15 @@
 # 2019-01-15_13-51-08 embedding_dim=64 filter_sizes=1,2,3 num_filters=64 hidden_units=512 --mini_batches_update
 # qt project
 # 2019-01-16_01-31-29 embedding_dim=64 filter_sizes=1,2,3 num_filters=64 hidden_units=512 --mini_batches_update
-# -embedding_dim=128 -filter_sizes=1,2,3,4 -hidden_units=1024 -num_filters=128 -num_epochs=500 --mini_batches_update
-# -embedding_dim=64 -filter_sizes=1,2,3 -num_filters=64 -hidden_units=512 --under_sampling
+# 2019-01-16_02-19-40 -embedding_dim=128 -filter_sizes=1,2,3,4 -hidden_units=1024 -num_filters=128 -num_epochs=500 --mini_batches_update
+# 2019-01-16_02-30-45 -embedding_dim=64 -filter_sizes=1,2,3 -num_filters=64 -hidden_units=512 --under_sampling
 
 # variables_ver6 folder is the folder that we split training/testing data based on author date following yasu data
 # variables_ver6 -- duration: short, three-months period
 ### openstack project
 # 2019-01-15_15-39-26 embedding_dim=64 filter_sizes=1,2,3 num_filters=64 hidden_units=512 --mini_batches_update
 # 2019-01-15_15-49-42 embedding_dim=64 filter_sizes=1,2,3 num_filters=64 hidden_units=512 --mini_batches_update
+
+### qt project
+# 2019-01-16_06-56-24 embedding_dim=64 filter_sizes=1,2,3 num_filters=64 hidden_units=512 --mini_batches_update
 

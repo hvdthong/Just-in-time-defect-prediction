@@ -70,6 +70,24 @@ def load_yasu_data(project, duration, period, path_file):
         test_path_data = '../yasu_replication_data/' + project + '.STRATA_PER_YEAR.4.local.8.csv'
         train, test = load_df_yasu_data(train_path_data, path_file), load_df_yasu_data(test_path_data, path_file)
         return train, test
+    elif project == 'openstack' and period == 'short':
+        train_path_data = '../yasu_replication_data/' + project + '.STRATA_PER_YEAR.4.local.7.csv'
+        test_path_data = '../yasu_replication_data/' + project + '.STRATA_PER_YEAR.4.local.8.csv'
+        train, test = load_df_yasu_data(train_path_data, path_file), load_df_yasu_data(test_path_data, path_file)
+        return train, test
+    elif project == 'qt' and period == 'long':
+        train_path_data = '../yasu_replication_data/' + project + '.STRATA_PER_YEAR.4.all.9.csv'
+        test_path_data = '../yasu_replication_data/' + project + '.STRATA_PER_YEAR.4.local.10.csv'
+        train, test = load_df_yasu_data(train_path_data, path_file), load_df_yasu_data(test_path_data, path_file)
+        return train, test
+    elif project == 'qt' and period == 'short':
+        train_path_data = '../yasu_replication_data/' + project + '.STRATA_PER_YEAR.4.local.9.csv'
+        test_path_data = '../yasu_replication_data/' + project + '.STRATA_PER_YEAR.4.local.10.csv'
+        train, test = load_df_yasu_data(train_path_data, path_file), load_df_yasu_data(test_path_data, path_file)
+        return train, test
+    else:
+        print('Wrong command')
+        exit()
 
 
 def baseline_algorithm(train, test, algorihm):
@@ -99,7 +117,10 @@ def baseline_algorithm(train, test, algorihm):
 
 
 if __name__ == '__main__':
-    project, duration, period = 'openstack', 'three-month', 'long'
+    # project, duration, period = 'openstack', 'three-month', 'long'
+    # project, duration, period = 'openstack', 'three-month', 'short'
+    project, duration, period = 'qt', 'three-month', 'long'
+    # project, duration, period = 'qt', 'three-month', 'short'
     # load training/testing data
     path_file = '../output/' + project
     train, test = load_yasu_data(project=project, duration=duration, period=period, path_file=path_file)
