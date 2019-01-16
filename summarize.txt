@@ -1,38 +1,45 @@
 # variables_ver1 folder is the folder that we randomly split training/testing data using stratified technique
 # variables_ver1: 
-###
-# 2019-01-04_13-28-35 embedding_dim=32 filter_sizes=1,2 num_filters=32 hidden_sizes=128 --mini_batches_update
-# 2019-01-04_14-21-28 embedding_dim=64 filter_sizes=1,2,3 num_filters=64 hidden_sizes=512 --mini_batches_update
-# 2019-01-06_11-01-07 embedding_dim=64 filter_sizes=1,2,3 num_filters=64 hidden_sizes=512 --under_sampling
-# 2019-01-06_11-01-36 embedding_dim=64 filter_sizes=1,2,3 num_filters=64 hidden_sizes=512 --loss_update
-# 2019-01-07_02-41-28 embedding_dim=64 filter_sizes=1,2,3 num_filters=64 hidden_sizes=512 --mini_batches_update
-# 2019-01-07_02-50-34 embedding_dim=64 filter_sizes=1,2,3 num_filters=64 hidden_sizes=512 --under_sampling + loss_update
+### openstack project
+# 2019-01-04_13-28-35 embedding_dim=32 filter_sizes=1,2 num_filters=32 hidden_units=128 --mini_batches_update
+# 2019-01-04_14-21-28 embedding_dim=64 filter_sizes=1,2,3 num_filters=64 hidden_units=512 --mini_batches_update
+# 2019-01-06_11-01-07 embedding_dim=64 filter_sizes=1,2,3 num_filters=64 hidden_units=512 --under_sampling
+# 2019-01-06_11-01-36 embedding_dim=64 filter_sizes=1,2,3 num_filters=64 hidden_units=512 --loss_update
+# 2019-01-07_02-41-28 embedding_dim=64 filter_sizes=1,2,3 num_filters=64 hidden_units=512 --mini_batches_update
+# 2019-01-07_02-50-34 embedding_dim=64 filter_sizes=1,2,3 num_filters=64 hidden_units=512 --under_sampling + loss_update
 
 # variables_ver2 folder is the folder that we split training/testing data based on author date
 # variables_ver2:
-###
-# 2019-01-14_13-14-34 embedding_dim=64 filter_sizes=1,2,3 num_filters=64 hidden_sizes=512 --mini_batches_update
-# 2019-01-14_16-31-00 embedding_dim=64 filter_sizes=1,2,3 num_filters=64 hidden_sizes=512 --under_sampling
-# 2019-01-14_16-49-46 embedding_dim=16 filter_sizes=1,2 num_filters=32 hidden_sizes=128 --mini_batches_update
+### openstack project
+# 2019-01-14_13-14-34 embedding_dim=64 filter_sizes=1,2,3 num_filters=64 hidden_units=512 --mini_batches_update
+# 2019-01-14_16-31-00 embedding_dim=64 filter_sizes=1,2,3 num_filters=64 hidden_units=512 --under_sampling
+# 2019-01-14_16-49-46 embedding_dim=16 filter_sizes=1,2 num_filters=32 hidden_units=128 --mini_batches_update
 
 # variables_ver3 folder is the folder that we split training/testing data based on author date, but we
 # use stratified techniques
 # variables_ver3:
-###
-# 2019-01-14_17-13-16 embedding_dim=64 filter_sizes=1,2,3 num_filters=64 hidden_sizes=512 --mini_batches_update
+### openstack project
+# 2019-01-14_17-13-16 embedding_dim=64 filter_sizes=1,2,3 num_filters=64 hidden_units=512 --mini_batches_update
 
 # variables_ver4 folder is the folder that we split training/testing data based on author date, but now we
 # use null for unknown words (previous, we use unk for unknown words). We use 10-folds instead of 5-folds
 # variables_ver4:
-# 2019-01-15_01-01-13 embedding_dim=64 filter_sizes=1,2,3 num_filters=64 hidden_sizes=512 --under_sampling
+### openstack project
+# 2019-01-15_01-01-13 embedding_dim=64 filter_sizes=1,2,3 num_filters=64 hidden_units=512 --under_sampling
 # 2019-01-15_01-06-59 -embedding_dim=32 -filter_sizes=1,2,3 -hidden_units=256 -num_filters=32 --mini_batches_update
 
 # variables_ver5 folder is the folder that we split training/testing data based on author date following yasu data
 # variables_ver5 -- duration: long, three-months period
-# 2019-01-15_13-51-08 embedding_dim=64 filter_sizes=1,2,3 num_filters=64 hidden_sizes=512 --mini_batches_update
+# openstack project
+# 2019-01-15_13-51-08 embedding_dim=64 filter_sizes=1,2,3 num_filters=64 hidden_units=512 --mini_batches_update
+# qt project
+# 2019-01-16_01-31-29 embedding_dim=64 filter_sizes=1,2,3 num_filters=64 hidden_units=512 --mini_batches_update
+# -embedding_dim=128 -filter_sizes=1,2,3,4 -hidden_units=1024 -num_filters=128 -num_epochs=500 --mini_batches_update
+# -embedding_dim=64 -filter_sizes=1,2,3 -num_filters=64 -hidden_units=512 --under_sampling
 
 # variables_ver6 folder is the folder that we split training/testing data based on author date following yasu data
 # variables_ver6 -- duration: short, three-months period
-# 2019-01-15_15-39-26 embedding_dim=64 filter_sizes=1,2,3 num_filters=64 hidden_sizes=512 --mini_batches_update
-# 2019-01-15_15-49-42 embedding_dim=64 filter_sizes=1,2,3 num_filters=64 hidden_sizes=512 --mini_batches_update
+### openstack project
+# 2019-01-15_15-39-26 embedding_dim=64 filter_sizes=1,2,3 num_filters=64 hidden_units=512 --mini_batches_update
+# 2019-01-15_15-49-42 embedding_dim=64 filter_sizes=1,2,3 num_filters=64 hidden_units=512 --mini_batches_update
 
