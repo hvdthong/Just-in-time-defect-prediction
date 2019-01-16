@@ -26,3 +26,13 @@
 # variables_ver4:
 # 2019-01-15_01-01-13 embedding_dim=64 filter_sizes=1,2,3 num_filters=64 hidden_sizes=512 --under_sampling
 # 2019-01-15_01-06-59 -embedding_dim=32 -filter_sizes=1,2,3 -hidden_units=256 -num_filters=32 --mini_batches_update
+
+# variables_ver5 folder is the folder that we split training/testing data based on author date following yasu data
+# variables_ver5 -- duration: long, three-months period
+# 2019-01-15_13-51-08 embedding_dim=64 filter_sizes=1,2,3 num_filters=64 hidden_sizes=512 --mini_batches_update
+
+# variables_ver6 folder is the folder that we split training/testing data based on author date following yasu data
+# variables_ver6 -- duration: short, three-months period
+# 2019-01-15_15-39-26 embedding_dim=64 filter_sizes=1,2,3 num_filters=64 hidden_sizes=512 --mini_batches_update
+# 2019-01-15_15-49-42 embedding_dim=64 filter_sizes=1,2,3 num_filters=64 hidden_sizes=512 --mini_batches_update
+
