@@ -170,10 +170,10 @@ def train_DBN(train_data, test_data, hidden_units, num_epochs_DBN=50, num_epochs
 if __name__ == '__main__':
     # loading parameters for the project
     ################################################################################3
-    # project, duration, period = 'openstack', 'three-month', 'long'
+    project, duration, period = 'openstack', 'three-month', 'long'
     # project, duration, period = 'openstack', 'three-month', 'short'
     # project, duration, period = 'qt', 'three-month', 'long'
-    project, duration, period = 'qt', 'three-month', 'short'
+    # project, duration, period = 'qt', 'three-month', 'short'
     ################################################################################3
 
     # load training/testing data
@@ -181,6 +181,6 @@ if __name__ == '__main__':
     path_file = '../output/' + project
     train, test = load_yasu_data(project=project, duration=duration, period=period, path_file=path_file)
     train, test = feature_scaling(data=train), feature_scaling(data=test)
-    hidden_units, num_epochs_DBN, num_epochs_LR = 12, 15, 200
+    hidden_units, num_epochs_DBN, num_epochs_LR = 12, 1, 200
     train_DBN(train_data=train, test_data=test, hidden_units=hidden_units, num_epochs_DBN=num_epochs_DBN,
               num_epochs_LR=num_epochs_LR)
