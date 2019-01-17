@@ -1,26 +1,30 @@
-import pandas as pd
-from baseline_JIT.load_data import replace_value_dataframe
-from clean_commit import loading_variable, saving_variable, clean_message, clean_code
+from clean_commit import clean_message, clean_code, saving_variable
 from parser_commit import info_commit
+from sklearn import preprocessing
 from padding import dictionary_commit
+import pandas as pd
+from split_train_test_yasu import replace_value_dataframe, get_ids, get_label
 from ultis import load_file
 import numpy as np
 
 
+def load_msg_code_feature(data, path_file):
+    ids, labels, features = data
+    messages, codes = info_commit(ids=ids, path_file=path_file)
+    messages, codes = clean_message(data=messages), clean_code(data=codes)
+    return (ids, labels, preprocessing.scale(features), messages, codes)
+
+
+def loading_dictionary(data):
+    ids, labels, features, messages, codes = data
+    dict_msg, dict_code = dictionary_commit(data=messages, type_data='msg'), dictionary_commit(data=codes,
+                                                                                               type_data='code')
+    return dict_msg, dict_code
+
+
 def get_features(data):
     # return the features of yasu data
-    return data[:, 5:32]
-
-
-def get_ids(data):
-    # return the labels of yasu data
-    return data[:, 1:2].flatten().tolist()
-
-
-def get_label(data):
-    data = data[:, 3:4].flatten().tolist()
-    data = [1 if int(d) > 0 else 0 for d in data]
-    return data
+    return np.concatenate((data[:, 5:33], data[:, 36:37]), axis=1)
 
 
 def load_df_yasu_data(path_data, path_file):
@@ -68,21 +72,8 @@ def load_yasu_data(project, duration, period, path_file):
         exit()
 
 
-def loading_msg_code(data, path_file):
-    ids, labels, features = data
-    messages, codes = info_commit(ids=ids, path_file=path_file)
-    messages, codes = clean_message(data=messages), clean_code(data=codes)
-    return (ids, labels, messages, codes)
-
-
-def loading_dictionary(data):
-    ids, labels, messages, codes = data
-    dict_msg, dict_code = dictionary_commit(data=messages, type_data='msg'), dictionary_commit(data=codes,
-                                                                                               type_data='code')
-    return dict_msg, dict_code
-
-
 if __name__ == '__main__':
+    # similar to split_train_test_yasu.py file, but we will add features extracted from yasu data + commit code + commit message
     # data description
     ################################################################################
     # STRATA_PER_YEAR.2 -> six - month periods
@@ -92,18 +83,19 @@ if __name__ == '__main__':
     # all -> Long - periods
     ################################################################################
     # setting project, long, and short period
-    project, duration, period = 'openstack', 'three-month', 'long'
+    # project, duration, period = 'openstack', 'three-month', 'long'
     # project, duration, period = 'openstack', 'three-month', 'short'
     # project, duration, period = 'qt', 'three-month', 'long'
-    # project, duration, period = 'qt', 'three-month', 'short'
+    project, duration, period = 'qt', 'three-month', 'short'
 
     ################################################################################
     # load training/testing data
     path_file = './output/' + project
     train, test = load_yasu_data(project=project, duration=duration, period=period, path_file=path_file)
-    train, test = loading_msg_code(data=train, path_file=path_file), loading_msg_code(data=test, path_file=path_file)
+    train, test = load_msg_code_feature(data=train, path_file=path_file), load_msg_code_feature(data=test,
+                                                                                                path_file=path_file)
     dict_msg, dict_code = loading_dictionary(data=train)
-    # saving_variable(project + '_train', train)
-    # saving_variable(project + '_test', test)
-    # saving_variable(project + '_dict_msg', dict_msg)
-    # saving_variable(project + '_dict_code', dict_code)
+    saving_variable(project + '_train', train)
+    saving_variable(project + '_test', test)
+    saving_variable(project + '_dict_msg', dict_msg)
+    saving_variable(project + '_dict_code', dict_code)

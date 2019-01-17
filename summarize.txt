@@ -7,8 +7,12 @@
 # 2019-01-06_11-01-36 embedding_dim=64 filter_sizes=1,2,3 num_filters=64 hidden_units=512 --loss_update
 # 2019-01-07_02-41-28 embedding_dim=64 filter_sizes=1,2,3 num_filters=64 hidden_units=512 --mini_batches_update
 # 2019-01-07_02-50-34 embedding_dim=64 filter_sizes=1,2,3 num_filters=64 hidden_units=512 --under_sampling + loss_update
+# 2019-01-17_10-53-21 embedding_dim=64 filter_sizes=1,2,3 num_filters=64 hidden_units=512 --mini_batches_update --code
+# 2019-01-17_12-51-34 embedding_dim=64 filter_sizes=1,2,3 num_filters=64 hidden_units=512 --mini_batches_update --msg
 ### qt project
 # 2019-01-17_06-32-00 -embedding_dim=64 -filter_sizes=1,2,3 -num_filters=64 -hidden_units=512 --mini_batch_update
+# 2019-01-17_10-54-12 embedding_dim=64 filter_sizes=1,2,3 num_filters=64 hidden_units=512 --mini_batches_update --code
+# 2019-01-17_12-52-46 embedding_dim=64 filter_sizes=1,2,3 num_filters=64 hidden_units=512 --mini_batches_update --msg
 
 # variables_ver2 folder is the folder that we split training/testing data based on author date
 # variables_ver2:
@@ -48,7 +52,17 @@
 ### openstack project
 # 2019-01-15_15-39-26 embedding_dim=64 filter_sizes=1,2,3 num_filters=64 hidden_units=512 --mini_batches_update
 # 2019-01-15_15-49-42 embedding_dim=64 filter_sizes=1,2,3 num_filters=64 hidden_units=512 --mini_batches_update
-
+# 2019-01-17_09-19-04 embedding_dim=64 filter_sizes=1,2,3 num_filters=64 hidden_units=512 --mini_batches_update --msg
+# 2019-01-17_09-29-15 embedding_dim=64 filter_sizes=1,2,3 num_filters=64 hidden_units=512 --mini_batches_update --code
 ### qt project
 # 2019-01-16_06-56-24 embedding_dim=64 filter_sizes=1,2,3 num_filters=64 hidden_units=512 --mini_batches_update
+# 2019-01-17_09-21-57 embedding_dim=64 filter_sizes=1,2,3 num_filters=64 hidden_units=512 --mini_batches_update --msg
+# 2019-01-17_09-30-57 embedding_dim=64 filter_sizes=1,2,3 num_filters=64 hidden_units=512 --mini_batches_update --code
+
+# variables_ver7 folder is the folder that we split training/testing data based on author date following yasu data
+# variables_ver7 -- duration: long, three-months period -- combined features: yasu features + (code + msg) features
+
+
+# variables_ver8 folder is the folder that we split training/testing data based on author date following yasu data
+# variables_ver8 -- duration: short, three-months period -- combined features: yasu features + (code + msg) features
 
