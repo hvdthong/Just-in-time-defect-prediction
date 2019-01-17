@@ -1,7 +1,7 @@
 import torch
 from parameters import read_args
 from ultis import mini_batches, write_file
-from model_defect import DefectNet
+from model_defect_msg import DefectNetMsg
 from clean_commit import loading_variable
 from padding import padding_message, padding_commit_code, mapping_dict_msg, mapping_dict_code
 from sklearn.metrics import accuracy_score, precision_score, recall_score, roc_curve, auc
@@ -65,7 +65,7 @@ def construct_model(data, params):
     params.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
     # create and train the defect model
-    model = DefectNet(params)
+    model = DefectNetMsg(params)
     if torch.cuda.is_available():
         model = model.cuda()
     return model, batches_test, batches_train
@@ -96,8 +96,8 @@ def eval_dir(dir, data, model):
 
 
 if __name__ == '__main__':
-    project = 'openstack'
-    # project = 'qt'
+    # project = 'openstack'
+    project = 'qt'
     training, testing, dictionary = loading_data(project=project)
 
     input_option = read_args().parse_args()
