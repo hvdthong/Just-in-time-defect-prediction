@@ -114,8 +114,8 @@ def train_DBN(train_data, test_data, hidden_units, num_epochs_DBN=50, num_epochs
 
 
 if __name__ == '__main__':
-    project = 'openstack'
-    # project = 'qt'
+    # project = 'openstack'
+    project = 'qt'
     path_data = '../output/' + project
     path_label = '../labels/' + project + '_ids_label.txt'
     ids, labels = loading_variable_path(pname='../variables_ver1/' + project + '_ids.pkl'), convert_label(
