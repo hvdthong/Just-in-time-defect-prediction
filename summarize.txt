@@ -7,6 +7,8 @@
 # 2019-01-06_11-01-36 embedding_dim=64 filter_sizes=1,2,3 num_filters=64 hidden_units=512 --loss_update
 # 2019-01-07_02-41-28 embedding_dim=64 filter_sizes=1,2,3 num_filters=64 hidden_units=512 --mini_batches_update
 # 2019-01-07_02-50-34 embedding_dim=64 filter_sizes=1,2,3 num_filters=64 hidden_units=512 --under_sampling + loss_update
+### qt project
+# 2019-01-17_06-32-00 -embedding_dim=64 -filter_sizes=1,2,3 -num_filters=64 -hidden_units=512 --mini_batch_update
 
 # variables_ver2 folder is the folder that we split training/testing data based on author date
 # variables_ver2:

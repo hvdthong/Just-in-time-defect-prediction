@@ -22,7 +22,7 @@ def load_features(ids, path_data):
         new_df.append(df.loc[df['commit_id'] == id])
     df = pd.concat(new_df)
     df = replace_value_dataframe(df=df)
-    ids, features = df[:, :1], df[:, 4:]
+    ids, features = df[:, :1], df[:, 10:]
     return ids, features
 
 
@@ -65,7 +65,8 @@ def baseline_algorithm(train, test, algorihm):
 
 
 if __name__ == '__main__':
-    project = 'openstack'
+    # project = 'openstack'
+    project = 'qt'
     path_data = '../output/' + project
     path_label = '../labels/' + project + '_ids_label.txt'
     ids, labels = loading_variable_path(pname='../variables_ver1/' + project + '_ids.pkl'), convert_label(
@@ -73,6 +74,6 @@ if __name__ == '__main__':
     ids, features = load_features(ids=ids, path_data='../labels/' + project + '.csv')
     training, testing = split_folding_data(X=features, y=labels, n_folds=5)
     # baseline_algorithm(train=training, test=testing, algorihm='svr_rbf')
-    baseline_algorithm(train=training, test=testing, algorihm='svr_poly')
-    # baseline_algorithm(train=training, test=testing, algorihm='lr')
+    # baseline_algorithm(train=training, test=testing, algorihm='svr_poly')
+    baseline_algorithm(train=training, test=testing, algorihm='lr')
     # baseline_algorithm(train=training, test=testing, algorihm='svm')

@@ -96,8 +96,8 @@ def eval_dir(dir, data, model):
 
 
 if __name__ == '__main__':
-    project = 'openstack'
-    # project = 'qt'
+    # project = 'openstack'
+    project = 'qt'
     training, testing, dictionary = loading_data(project=project)
 
     input_option = read_args().parse_args()

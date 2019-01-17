@@ -25,7 +25,7 @@ def loading_data(project):
 
 def get_features(data):
     # return the features of yasu data
-    return data[:, 5:32]
+    return data[:, 11:32]
 
 
 def get_ids(data):

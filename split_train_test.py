@@ -56,16 +56,17 @@ def folding_data_authordate(pad_msg, pad_code, labels, ids, n_folds):
 
 if __name__ == '__main__':
     # project = 'openstack'
-    # messages, codes = loading_variable(project + '_messages'), loading_variable(project + '_codes')
-    # ids, labels = loading_variable(project + '_ids'), convert_label(loading_variable(project + '_labels'))
-    # info_label(data=labels)
-    # print('Number of instances in commit message %i and commit code %i ' % (len(messages), len(codes)))
-    # print('Labels: %i' % (len(labels)))
-    # train, test, dict_msg, dict_code = folding_data(pad_msg=messages, pad_code=codes, labels=labels, ids=ids, n_folds=5)
-    # saving_variable(project + '_train', train)
-    # saving_variable(project + '_test', test)
-    # saving_variable(project + '_dict_msg', dict_msg)
-    # saving_variable(project + '_dict_code', dict_code)
+    project = 'qt'
+    messages, codes = loading_variable(project + '_messages'), loading_variable(project + '_codes')
+    ids, labels = loading_variable(project + '_ids'), convert_label(loading_variable(project + '_labels'))
+    info_label(data=labels)
+    print('Number of instances in commit message %i and commit code %i ' % (len(messages), len(codes)))
+    print('Labels: %i' % (len(labels)))
+    train, test, dict_msg, dict_code = folding_data(pad_msg=messages, pad_code=codes, labels=labels, ids=ids, n_folds=5)
+    saving_variable(project + '_train', train)
+    saving_variable(project + '_test', test)
+    saving_variable(project + '_dict_msg', dict_msg)
+    saving_variable(project + '_dict_code', dict_code)
 
     # dict_msg, dict_code = dictionary_commit(data=messages, type_data='msg'), dictionary_commit(data=codes,
     #                                                                                            type_data='code')
@@ -105,14 +106,14 @@ if __name__ == '__main__':
     # saving_variable(project + '_dict_msg', dict_msg)
     # saving_variable(project + '_dict_code', dict_code)
 
-    project = 'openstack'
-    messages, codes = loading_variable(project + '_messages'), loading_variable(project + '_codes')
-    ids, labels = loading_variable(project + '_ids'), loading_variable(project + '_labels')
-    info_label(data=labels)
-    print('Number of instances in commit message %i and commit code %i ' % (len(messages), len(codes)))
-    print('Labels: %i' % (len(labels)))
-    train, test, dict_msg, dict_code = folding_data(pad_msg=messages, pad_code=codes, labels=labels, ids=ids, n_folds=5)
-    saving_variable(project + '_train', train)
-    saving_variable(project + '_test', test)
-    saving_variable(project + '_dict_msg', dict_msg)
-    saving_variable(project + '_dict_code', dict_code)
+    # project = 'openstack'
+    # messages, codes = loading_variable(project + '_messages'), loading_variable(project + '_codes')
+    # ids, labels = loading_variable(project + '_ids'), loading_variable(project + '_labels')
+    # info_label(data=labels)
+    # print('Number of instances in commit message %i and commit code %i ' % (len(messages), len(codes)))
+    # print('Labels: %i' % (len(labels)))
+    # train, test, dict_msg, dict_code = folding_data(pad_msg=messages, pad_code=codes, labels=labels, ids=ids, n_folds=5)
+    # saving_variable(project + '_train', train)
+    # saving_variable(project + '_test', test)
+    # saving_variable(project + '_dict_msg', dict_msg)
+    # saving_variable(project + '_dict_code', dict_code)

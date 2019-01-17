@@ -111,20 +111,20 @@ def train_DBN(train_data, test_data, hidden_units, num_epochs_DBN=50, num_epochs
 
     # training DBN model
     #################################################################################################
-    dbn_model = DBN(visible_units=train_features.shape[1],
-                    hidden_units=[20, hidden_units],
-                    k=5,
-                    learning_rate=0.01,
-                    learning_rate_decay=True,
-                    xavier_init=True,
-                    increase_to_cd_k=False,
-                    use_gpu=False)
-    dbn_model.train_static(train_features, train_labels, num_epochs=num_epochs_DBN, batch_size=32)
-    # Finishing the training DBN model
-    print('---------------------Finishing the training DBN model---------------------')
-    # using DBN model to construct features
-    train_features, _ = dbn_model.forward(train_features)
-    test_features, _ = dbn_model.forward(test_features)
+    # dbn_model = DBN(visible_units=train_features.shape[1],
+    #                 hidden_units=[20, hidden_units],
+    #                 k=5,
+    #                 learning_rate=0.01,
+    #                 learning_rate_decay=True,
+    #                 xavier_init=True,
+    #                 increase_to_cd_k=False,
+    #                 use_gpu=False)
+    # dbn_model.train_static(train_features, train_labels, num_epochs=num_epochs_DBN, batch_size=32)
+    # # Finishing the training DBN model
+    # print('---------------------Finishing the training DBN model---------------------')
+    # # using DBN model to construct features
+    # train_features, _ = dbn_model.forward(train_features)
+    # test_features, _ = dbn_model.forward(test_features)
     ##################################################################################################
 
     # training LR model

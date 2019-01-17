@@ -58,7 +58,7 @@ class DBN(nn.Module):
     def forward(self, input_data):
         '''
             running the forward pass
-            do not confuse with training this just runs a foward pass
+            do not confuse with training this just runs a forward pass
         '''
         v = input_data
         for i in range(len(self.rbm_layers)):
