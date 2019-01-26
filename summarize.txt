@@ -61,8 +61,23 @@
 
 # variables_ver7 folder is the folder that we split training/testing data based on author date following yasu data
 # variables_ver7 -- duration: long, three-months period -- combined features: yasu features + (code + msg) features
-
+### openstack project
+# 2019-01-17_15-46-11 embedding_dim=64 filter_sizes=1,2,3 num_filters=64 hidden_units=512 --mini_batches_update --combined
+### qt project
+# 2019-01-17_15-49-28 embedding_dim=64 filter_sizes=1,2,3 num_filters=64 hidden_units=512 --mini_batches_update --combined
 
 # variables_ver8 folder is the folder that we split training/testing data based on author date following yasu data
 # variables_ver8 -- duration: short, three-months period -- combined features: yasu features + (code + msg) features
+### openstack project
+# 2019-01-18_00-48-25 embedding_dim=64 filter_sizes=1,2,3 num_filters=64 hidden_units=512 --mini_batches_update --combined
+### qt project
+# 2019-01-18_00-49-30 embedding_dim=64 filter_sizes=1,2,3 num_filters=64 hidden_units=512 --mini_batches_update --combined
+
+
+# variables_ver9 folder is the folder that we randomly split training/testing using stratified technique
+# variables_ver9 -- combined features: yasu features + (code + msg) features
+### openstack project
+# 2019-01-17_17-15-05 embedding_dim=64 filter_sizes=1,2,3 num_filters=64 hidden_units=512 --mini_batches_update --combined
+### qt project
+# 2019-01-17_23-42-18 embedding_dim=64 filter_sizes=1,2,3 num_filters=64 hidden_units=512 --mini_batches_update --combined
 
